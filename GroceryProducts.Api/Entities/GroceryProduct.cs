@@ -1,0 +1,76 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GroceryProducts.Api.Entities
+{
+    public class GroceryProduct
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Product name is required.")]
+        [StringLength(255, ErrorMessage = "Product name cannot exceed 255 characters.")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Category is required.")]
+        [StringLength(100, ErrorMessage = "Category cannot exceed 100 characters.")]
+        public string Category { get; set; }
+
+        [Required(ErrorMessage = "Description is required.")]
+        public string Description { get; set; }
+
+        [Range(0, double.MaxValue, ErrorMessage = "Price must be a non-negative value.")]
+        public decimal Price { get; set; }
+
+        [Range(0, int.MaxValue, ErrorMessage = "Quantity must be a non-negative integer.")]
+        public int QuantityInStock { get; set; } = 0; // Default to 0
+
+        [Url(ErrorMessage = "Invalid URL format.")]
+        public string? ImageUrl { get; set; } // Make nullable
+
+        [StringLength(255, ErrorMessage = "Brand cannot exceed 255 characters.")]
+        public string? Brand { get; set; } // Make nullable
+
+        [StringLength(50, ErrorMessage = "Unit cannot exceed 50 characters.")]
+        public string? Unit { get; set; } // e.g., "kg", "liter", "piece" - Make nullable
+
+        [Required]
+        [StringLength(255)]
+        public string Slug { get; set; } // The slug field
+
+        // Add other relevant properties as needed, e.g.,
+        // public DateTime CreatedAt { get; set; }
+        // public DateTime UpdatedAt { get; set; }
+        // public bool IsFeatured { get; set; }
+        // public bool IsActive { get; set; }
+
+        // Example of a related entity (if needed)
+        // public int SupplierId { get; set; }
+        // public Supplier Supplier { get; set; }
+
+        // Example method to generate a slug (you would typically do this before saving to the database)
+        public static string GenerateSlug(string productName)
+        {
+            if (string.IsNullOrWhiteSpace(productName))
+            {
+                return ""; // Or handle as you see fit
+            }
+
+            string slug = productName.ToLower();
+            slug = System.Text.RegularExpressions.Regex.Replace(slug, @"[^a-z0-9\s-]", ""); // Remove invalid chars
+            slug = System.Text.RegularExpressions.Regex.Replace(slug, @"\s+", "-").Trim(); // Replace spaces with hyphens
+            slug = System.Text.RegularExpressions.Regex.Replace(slug, @"-+", "-"); // Remove duplicate hyphens
+
+            return slug;
+        }
+    }
+
+    //public class GroceryProduct
+    //{
+    //    public int Id { get; set; }
+    //    public string Name { get; set; }
+    //    public string Slug { get; set; }
+    //    public string Category { get; set; }
+    //    public decimal Price { get; set; }
+    //    public int StockQuantity { get; set; }
+    //}
+}
