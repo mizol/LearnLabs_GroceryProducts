@@ -1,0 +1,35 @@
+[
+  {
+    "Id": 1,
+    "Name": "Organic Apples",
+    "Category": "Fruits",
+    "Description": "Fresh, juicy apples from local farms.",
+    "Price": 1.50,
+    "Slug": "organic-apples"
+  },
+  {
+    "Id": 2,
+    "Name": "Whole Milk",
+    "Category": "Dairy",
+    "Description": "1 gallon of fresh whole milk.",
+    "Price": 3.99,
+    "Slug": "whole-milk"
+  },
+  {
+    "Id": 3,
+    "Name": "Brown Eggs - 12 count",
+    "Category": "Dairy",
+    "Description": "A dozen fresh, organic brown eggs.",
+    "Price": 4.50,
+    "Slug": "brown-eggs-12-count"
+  },
+  // ... (Add 22 more test products - copy, adjust values, and increment Id)
+  {
+    "Id": 25,
+    "Name": "Whole Wheat Bread",
+    "Category": "Bakery",
+    "Description": "Freshly baked whole wheat bread.",
+    "Price": 2.75,
+    "Slug": "whole-wheat-bread"
+  }
+]

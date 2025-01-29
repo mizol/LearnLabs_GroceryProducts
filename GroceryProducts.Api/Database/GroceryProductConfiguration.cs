@@ -1,6 +1,8 @@
 ﻿using GroceryProducts.Api.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using System.Text.Json;
 
 namespace GroceryProducts.Api.Database
 {
@@ -53,6 +55,33 @@ namespace GroceryProducts.Api.Database
             //        .HasForeignKey(p => p.SupplierId);
 
             // Add other configurations as needed (e.g., indexes, relationships, etc.)
+
+            // Seed data from JSON file
+            //var seedData = LoadSeedData();
+            //if (seedData != null)
+            //{
+            //    builder.HasData(seedData);
+            //}
+        }
+
+        private List<GroceryProduct> LoadSeedData()
+        {
+            try
+            {
+                var filePath = Path.Combine(AppContext.BaseDirectory, 
+                    "Database/Seeds",
+                    "grocery_products_seeds.json");
+
+                var json = File.ReadAllText(filePath);
+                
+                return JsonSerializer.Deserialize<List<GroceryProduct>>(json);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading seed data: {ex.Message}");
+
+                throw;
+            }
         }
     }
 }
