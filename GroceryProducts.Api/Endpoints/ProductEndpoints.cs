@@ -1,5 +1,6 @@
 ﻿using GroceryProducts.Api.Database;
 using GroceryProducts.Api.Entities;
+using GroceryProducts.Api.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Mime;
 
@@ -12,7 +13,7 @@ namespace GroceryProducts.Api.Endpoints
             routes.MapGet("/api/products", GetProducts)
                 .WithName("GetProducts")
                 .WithOpenApi() // Enable Swagger documentation
-                .Produces<List<GroceryProduct>>(StatusCodes.Status200OK) // Specify success response type
+                .Produces<PagedResult<GroceryProduct>>(StatusCodes.Status200OK) // Specify success response type
                 .ProducesProblem(StatusCodes.Status500InternalServerError); // Specify error response
 
             routes.MapGet("/api/products/{id}", GetProductById)
@@ -47,8 +48,8 @@ namespace GroceryProducts.Api.Endpoints
                 .ProducesProblem(StatusCodes.Status500InternalServerError);
         }
 
-
-        private static async Task<IResult> GetProducts(GroceryDbContext db, string? searchTerm, CancellationToken cancellationToken)
+        
+        private static async Task<IResult> GetProducts(GroceryDbContext db, string? searchTerm = null, string? slug = null, int page = 1, int pageSize = 10, CancellationToken cancellationToken = default)
         {
             IQueryable<GroceryProduct> query = db.Products;
 
@@ -58,8 +59,21 @@ namespace GroceryProducts.Api.Endpoints
                                          p.Category.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
             }
 
-            var products = await query.ToListAsync(cancellationToken);
-            return Results.Ok(products);
+            if (!string.IsNullOrEmpty(slug))
+            {
+                query = query.Where(p => p.Slug == slug);
+            }
+
+            var totalCount = await query.CountAsync(cancellationToken);
+
+            var products = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(cancellationToken);
+
+            var pagedResult = new PagedResult<GroceryProduct>(products, totalCount, page, pageSize);
+
+            return Results.Ok(pagedResult);
         }
 
         private static async Task<IResult> GetProductById(GroceryDbContext db, int id, CancellationToken cancellationToken)
