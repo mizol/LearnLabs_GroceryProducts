@@ -6,9 +6,9 @@ using System.Net.Mime;
 
 namespace GroceryProducts.Api.Endpoints
 {
-    public class ProductEndpoints
+    public static class GroceryProductEndpoints
     {
-        public static void MapEndpoints(IEndpointRouteBuilder routes)
+        public static void MapGroceryProductEndpoints(this IEndpointRouteBuilder routes)
         {
             routes.MapGet("/api/products", GetProducts)
                 .WithName("GetProducts")
