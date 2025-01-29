@@ -23,7 +23,174 @@
     "Price": 4.50,
     "Slug": "brown-eggs-12-count"
   },
-  // ... (Add 22 more test products - copy, adjust values, and increment Id)
+  {
+    "Id": 4,
+    "Name": "Bananas",
+    "Category": "Fruits",
+    "Description": "Ripe and ready to eat.",
+    "Price": 0.50,
+    "Slug": "bananas"
+  },
+  {
+    "Id": 5,
+    "Name": "Carrots",
+    "Category": "Vegetables",
+    "Description": "Fresh, crunchy carrots.",
+    "Price": 0.75,
+    "Slug": "carrots"
+  },
+  {
+    "Id": 6,
+    "Name": "Chicken Breast",
+    "Category": "Meat & Seafood",
+    "Description": "Boneless, skinless chicken breast.",
+    "Price": 4.99,
+    "Slug": "chicken-breast"
+  },
+  {
+    "Id": 7,
+    "Name": "Salmon Fillet",
+    "Category": "Meat & Seafood",
+    "Description": "Fresh salmon fillet.",
+    "Price": 9.99,
+    "Slug": "salmon-fillet"
+  },
+  {
+    "Id": 8,
+    "Name": "Cheddar Cheese",
+    "Category": "Dairy",
+    "Description": "Sharp cheddar cheese.",
+    "Price": 3.50,
+    "Slug": "cheddar-cheese"
+  },
+  {
+    "Id": 9,
+    "Name": "Yogurt",
+    "Category": "Dairy",
+    "Description": "Plain yogurt.",
+    "Price": 2.00,
+    "Slug": "yogurt"
+  },
+  {
+    "Id": 10,
+    "Name": "Bread",
+    "Category": "Bakery",
+    "Description": "Freshly baked bread.",
+    "Price": 2.50,
+    "Slug": "bread"
+  },
+  {
+    "Id": 11,
+    "Name": "Pasta",
+    "Category": "Pantry",
+    "Description": "Spaghetti pasta.",
+    "Price": 1.25,
+    "Slug": "pasta"
+  },
+  {
+    "Id": 12,
+    "Name": "Rice",
+    "Category": "Pantry",
+    "Description": "Long grain rice.",
+    "Price": 1.75,
+    "Slug": "rice"
+  },
+  {
+    "Id": 13,
+    "Name": "Olive Oil",
+    "Category": "Pantry",
+    "Description": "Extra virgin olive oil.",
+    "Price": 5.99,
+    "Slug": "olive-oil"
+  },
+  {
+    "Id": 14,
+    "Name": "Tomatoes",
+    "Category": "Vegetables",
+    "Description": "Fresh, ripe tomatoes.",
+    "Price": 0.99,
+    "Slug": "tomatoes"
+  },
+  {
+    "Id": 15,
+    "Name": "Lettuce",
+    "Category": "Vegetables",
+    "Description": "Crisp lettuce.",
+    "Price": 1.25,
+    "Slug": "lettuce"
+  },
+  {
+    "Id": 16,
+    "Name": "Beef Steak",
+    "Category": "Meat & Seafood",
+    "Description": "Tender beef steak.",
+    "Price": 8.99,
+    "Slug": "beef-steak"
+  },
+  {
+    "Id": 17,
+    "Name": "Shrimp",
+    "Category": "Meat & Seafood",
+    "Description": "Fresh shrimp.",
+    "Price": 7.99,
+    "Slug": "shrimp"
+  },
+  {
+    "Id": 18,
+    "Name": "Milk",
+    "Category": "Dairy",
+    "Description": "2% milk.",
+    "Price": 3.00,
+    "Slug": "milk"
+  },
+  {
+    "Id": 19,
+    "Name": "Butter",
+    "Category": "Dairy",
+    "Description": "Unsalted butter.",
+    "Price": 2.75,
+    "Slug": "butter"
+  },
+  {
+    "Id": 20,
+    "Name": "Bagels",
+    "Category": "Bakery",
+    "Description": "Freshly baked bagels.",
+    "Price": 1.50,
+    "Slug": "bagels"
+  },
+  {
+    "Id": 21,
+    "Name": "Cereal",
+    "Category": "Pantry",
+    "Description": "Breakfast cereal.",
+    "Price": 3.25,
+    "Slug": "cereal"
+  },
+  {
+    "Id": 22,
+    "Name": "Coffee",
+    "Category": "Pantry",
+    "Description": "Ground coffee.",
+    "Price": 4.50,
+    "Slug": "coffee"
+  },
+  {
+    "Id": 23,
+    "Name": "Tea",
+    "Category": "Pantry",
+    "Description": "Black tea bags.",
+    "Price": 2.00,
+    "Slug": "tea"
+  },
+  {
+    "Id": 24,
+    "Name": "Sugar",
+    "Category": "Pantry",
+    "Description": "Granulated sugar.",
+    "Price": 1.75,
+    "Slug": "sugar"
+  },
   {
     "Id": 25,
     "Name": "Whole Wheat Bread",
