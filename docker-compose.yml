@@ -1,0 +1,52 @@
+
+name: grocery-product-api
+
+services:
+  # GroceryProduct.Api
+  groceryproducts.api:
+    image: ${DOCKER_REGISTRY-}groceryproductsapi
+    container_name: GroceryProduct.Api
+    build:
+      context: .
+      dockerfile: GroceryProducts.Api/Dockerfile
+    ports:
+      - 5256:5256
+      - 7274:7274 
+    depends_on:
+      - groceryproducts.db
+
+  # GroceryProduct.DB
+  groceryproducts.db:
+    image: postgres:latest
+    container_name: GroceryProduct.Db
+    environment:
+      - POSTGRES_DB=techblogs
+      - POSTGRES_USER=${POSTGRES_USER} # .env file
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD} # .env file
+    volumes:
+      - grocery_product_data:/var/lib/postgresql/data
+    ports:
+      - 5232:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # GroceryProduct pgAdmin4
+  techblogs.pg_admin:
+    image: dpage/pgadmin4:latest
+    container_name: GroceryProduct.PGAdmin4
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    volumes:
+      - pgAdmin_data:/var/lib/pgadmin
+    depends_on:
+      - groceryproducts.db
+  
+volumes:
+  grocery_product_data:
+  pgAdmin_data:  
