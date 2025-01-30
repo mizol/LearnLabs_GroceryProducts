@@ -16,6 +16,12 @@ namespace GroceryProducts.Api.Endpoints
                 .Produces<PagedResult<GroceryProduct>>(StatusCodes.Status200OK) // Specify success response type
                 .ProducesProblem(StatusCodes.Status500InternalServerError); // Specify error response
 
+            routes.MapGet("/api/products/function-search", GetProductsByFunction)
+                .WithName("GetProductsByFunctionSearch")
+                .WithOpenApi()
+                .Produces<PagedResult<GroceryProduct>>(StatusCodes.Status200OK) 
+                .ProducesProblem(StatusCodes.Status500InternalServerError);
+
             routes.MapGet("/api/products/{id}", GetProductById)
                 .WithName("GetProductById")
                 .WithOpenApi()
@@ -53,10 +59,12 @@ namespace GroceryProducts.Api.Endpoints
         {
             IQueryable<GroceryProduct> query = db.Products;
 
+            searchTerm = searchTerm.ToLower();
+
             if (!string.IsNullOrEmpty(searchTerm))
             {
-                query = query.Where(p => p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                                         p.Category.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+                query = query.Where(p => EF.Functions.Like(p.Name.ToLower(), $"%{searchTerm}%") ||
+                             EF.Functions.Like(p.Category.ToLower(), $"%{searchTerm}%"));
             }
 
             if (!string.IsNullOrEmpty(slug))
@@ -74,6 +82,30 @@ namespace GroceryProducts.Api.Endpoints
             var pagedResult = new PagedResult<GroceryProduct>(products, totalCount, page, pageSize);
 
             return Results.Ok(pagedResult);
+        }
+
+        private static async Task<IResult> GetProductsByFunction(
+            GroceryDbContext db,
+            string? searchTerm = null,
+            int page = 1,
+            int pageSize = 10,
+            CancellationToken cancellationToken = default)
+        {
+            object searchParam;
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                searchParam = DBNull.Value;
+            }
+            else
+            {
+                searchParam = searchTerm;
+            }
+
+            var products = await db.Products
+                .FromSqlRaw("SELECT * FROM GetPagedSearchResults({0}, {1}, {2})", searchParam, page, pageSize)
+                .ToListAsync(cancellationToken);
+
+            return Results.Ok(products);
         }
 
         private static async Task<IResult> GetProductById(GroceryDbContext db, int id, CancellationToken cancellationToken)
