@@ -12,14 +12,9 @@ namespace GroceryProducts.Api.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.HasDefaultSchema(Schemas.GroceryProducts);
-
             modelBuilder.HasDefaultSchema(Schemas.GroceryProducts);
 
             modelBuilder.ApplyConfiguration(new GroceryProductConfiguration());
-
-            // If you have other entities and configurations, apply them here as well:
-            // modelBuilder.ApplyConfiguration(new AnotherEntityConfiguration()); 
 
             base.OnModelCreating(modelBuilder);
         }
