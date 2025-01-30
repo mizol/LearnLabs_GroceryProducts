@@ -1,0 +1,13 @@
+services:
+  groceryproducts.api:
+    image: ${DOCKER_REGISTRY-}groceryproductsapi:dev
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5256
+      - ASPNETCORE_HTTPS_PORTS=7274
+    ports:
+      - "5256"
+      - "7274"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro

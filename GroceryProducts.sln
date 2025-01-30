@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroceryProducts", "GroceryP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroceryProducts.Api", "GroceryProducts.Api\GroceryProducts.Api.csproj", "{97555277-29CE-46C7-B1E2-19E7C39CD7A7}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9B27F9B3-FB31-4C5E-A9E6-4326ECFB1C06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{97555277-29CE-46C7-B1E2-19E7C39CD7A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97555277-29CE-46C7-B1E2-19E7C39CD7A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97555277-29CE-46C7-B1E2-19E7C39CD7A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B27F9B3-FB31-4C5E-A9E6-4326ECFB1C06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B27F9B3-FB31-4C5E-A9E6-4326ECFB1C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B27F9B3-FB31-4C5E-A9E6-4326ECFB1C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B27F9B3-FB31-4C5E-A9E6-4326ECFB1C06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
