@@ -57,11 +57,11 @@ namespace GroceryProducts.Api.Database
             // Add other configurations as needed (e.g., indexes, relationships, etc.)
 
             // Seed data from JSON file
-            //var seedData = LoadSeedData();
-            //if (seedData != null)
-            //{
-            //    builder.HasData(seedData);
-            //}
+            var seedData = LoadSeedData();
+            if (seedData != null)
+            {
+                builder.HasData(seedData);
+            }
         }
 
         private List<GroceryProduct> LoadSeedData()

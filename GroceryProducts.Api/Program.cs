@@ -10,7 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.AddDbContext<GroceryDbContext>(options =>
     options
         .UseNpgsql(
@@ -21,6 +20,23 @@ builder.Services.AddDbContext<GroceryDbContext>(options =>
 
 
 var app = builder.Build();
+
+// In Program.cs (ASP.NET Core example)
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<GroceryDbContext>();
+
+    if (dbContext.Database.GetPendingMigrations().Any())
+    {
+        Console.WriteLine("Pending migrations found. Applying...");
+        dbContext.Database.Migrate(); // Apply pending migrations
+        Console.WriteLine("Migrations applied.");
+    }
+    else
+    {
+        Console.WriteLine("No pending migrations found.");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

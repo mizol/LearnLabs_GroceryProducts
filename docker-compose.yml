@@ -20,11 +20,11 @@ services:
     image: postgres:latest
     container_name: GroceryProduct.Db
     environment:
-      - POSTGRES_DB=techblogs
+      - POSTGRES_DB=products
       - POSTGRES_USER=${POSTGRES_USER} # .env file
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD} # .env file
     volumes:
-      - grocery_product_data:/var/lib/postgresql/data
+      - groceryproduct_data:/var/lib/postgresql/data
     ports:
       - 5232:5432
     healthcheck:
@@ -48,5 +48,5 @@ services:
       - groceryproducts.db
   
 volumes:
-  grocery_product_data:
+  groceryproduct_data:
   pgAdmin_data:  
