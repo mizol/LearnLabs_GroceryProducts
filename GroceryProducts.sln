@@ -9,6 +9,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroceryProducts.Api", "Groc
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9B27F9B3-FB31-4C5E-A9E6-4326ECFB1C06}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0D07A93E-FFF6-45EC-B35A-11E7055CB0B5}"
+	ProjectSection(SolutionItems) = preProject
+		.env.example = .env.example
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FFE04C06-A713-4E3A-9416-0E525A1F3170}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{AC635E56-3AB4-4FD0-8196-9CD02CA45333}"
+	ProjectSection(SolutionItems) = preProject
+		Solution Items\img\SQLFunction.png = Solution Items\img\SQLFunction.png
+		Solution Items\img\FullTextSearch.png = Solution Items\img\FullTextSearch.png
+		Solution Items\img\SQLSelect.png = Solution Items\img\SQLSelect.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +46,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1C0CF5A8-0AD8-45CB-B77E-695203FAD6A6} = {FFE04C06-A713-4E3A-9416-0E525A1F3170}
+		{97555277-29CE-46C7-B1E2-19E7C39CD7A7} = {FFE04C06-A713-4E3A-9416-0E525A1F3170}
+		{AC635E56-3AB4-4FD0-8196-9CD02CA45333} = {0D07A93E-FFF6-45EC-B35A-11E7055CB0B5}
 	EndGlobalSection
 EndGlobal
