@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using NpgsqlTypes;
 
 namespace GroceryProducts.Api.Entities
 {
-    public class GroceryProduct
+    public class GroceryProductVector
     {
         [Key]
         public int Id { get; set; }
@@ -36,6 +37,8 @@ namespace GroceryProducts.Api.Entities
         [Required]
         [StringLength(255)]
         public string Slug { get; set; } // The slug field
+
+        public NpgsqlTsVector SearchVector { get; set; }
 
         // public DateTime CreatedAt { get; set; }
         // public DateTime UpdatedAt { get; set; }

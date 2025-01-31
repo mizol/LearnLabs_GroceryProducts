@@ -1,6 +1,5 @@
 ﻿using GroceryProducts.Api.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 
 namespace GroceryProducts.Api.Database
 {
@@ -15,6 +14,7 @@ namespace GroceryProducts.Api.Database
             modelBuilder.HasDefaultSchema(Schemas.GroceryProducts);
 
             modelBuilder.ApplyConfiguration(new GroceryProductConfiguration());
+            modelBuilder.ApplyConfiguration(new GroceryProductVectorConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

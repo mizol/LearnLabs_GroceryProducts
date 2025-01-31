@@ -22,6 +22,12 @@ namespace GroceryProducts.Api.Endpoints
                 .Produces<PagedResult<GroceryProduct>>(StatusCodes.Status200OK) 
                 .ProducesProblem(StatusCodes.Status500InternalServerError);
 
+            routes.MapGet("/api/products/fulltext", GetProductsFullTextSearch)
+                .WithName("GetProductsByFullTextSearch")
+                .WithOpenApi()
+                .Produces<PagedResult<GroceryProduct>>(StatusCodes.Status200OK)
+                .ProducesProblem(StatusCodes.Status500InternalServerError);
+
             routes.MapGet("/api/products/{id}", GetProductById)
                 .WithName("GetProductById")
                 .WithOpenApi()
@@ -53,23 +59,24 @@ namespace GroceryProducts.Api.Endpoints
                 .ProducesProblem(StatusCodes.Status404NotFound)
                 .ProducesProblem(StatusCodes.Status500InternalServerError);
         }
-
         
-        private static async Task<IResult> GetProducts(GroceryDbContext db, string? searchTerm = null, string? slug = null, int page = 1, int pageSize = 10, CancellationToken cancellationToken = default)
+        private static async Task<IResult> GetProducts(
+            GroceryDbContext db, 
+            string? searchTerm = null,
+            int page = 1, 
+            int pageSize = 10,
+            CancellationToken cancellationToken = default)
         {
             IQueryable<GroceryProduct> query = db.Products;
 
-            searchTerm = searchTerm.ToLower();
-
             if (!string.IsNullOrEmpty(searchTerm))
             {
-                query = query.Where(p => EF.Functions.Like(p.Name.ToLower(), $"%{searchTerm}%") ||
-                             EF.Functions.Like(p.Category.ToLower(), $"%{searchTerm}%"));
-            }
+                searchTerm = searchTerm.ToLower();
 
-            if (!string.IsNullOrEmpty(slug))
-            {
-                query = query.Where(p => p.Slug == slug);
+                query = query.Where(p => EF.Functions.Like(p.Name.ToLower(), $"%{searchTerm}%") ||
+                             EF.Functions.Like(p.Category.ToLower(), $"%{searchTerm}%") ||
+                             (p.Description != null && EF.Functions.Like(p.Description.ToLower(), $"%{searchTerm}%")) ||
+                             EF.Functions.Like(p.Slug.ToLower(), $"%{searchTerm}%"));
             }
 
             var totalCount = await query.CountAsync(cancellationToken);
@@ -91,6 +98,35 @@ namespace GroceryProducts.Api.Endpoints
             int pageSize = 10,
             CancellationToken cancellationToken = default)
         {
+            object searchParam = string.IsNullOrEmpty(searchTerm) ? DBNull.Value : searchTerm;
+
+            var productsDto = await db.Database
+                .SqlQueryRaw<GroceryProductDto>(@"
+                    SELECT name, id, brand, category, description, image_url, price, quantity_in_stock, slug, unit, total_count
+                    FROM GetPagedSearchResults({0}, {1}, {2})",
+                    searchParam, page, pageSize)
+                .ToListAsync(cancellationToken);
+
+            if (!productsDto.Any())
+            {
+                return Results.Ok(
+                    new PagedResult<GroceryProductDto>(new List<GroceryProductDto>(), 0, page, pageSize));
+            }
+
+            int totalCount = productsDto[0].TotalCount;
+            var pagedResult = new PagedResult<GroceryProductDto>(productsDto, totalCount, page, pageSize);
+
+            return Results.Ok(pagedResult);
+        }
+
+
+        private static async Task<IResult> GetProductsByFunction1(
+            GroceryDbContext db,
+            string? searchTerm = null,
+            int page = 1,
+            int pageSize = 10,
+            CancellationToken cancellationToken = default)
+        {
             object searchParam;
             if (string.IsNullOrEmpty(searchTerm))
             {
@@ -106,6 +142,36 @@ namespace GroceryProducts.Api.Endpoints
                 .ToListAsync(cancellationToken);
 
             return Results.Ok(products);
+        }
+
+        private static async Task<IResult> GetProductsFullTextSearch(
+            GroceryDbContext db,
+            string searchTerm,
+            int page = 1,
+            int pageSize = 10,
+            CancellationToken cancellationToken = default)
+        {
+            IQueryable<GroceryProduct> query = db.Products;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(p =>
+                    EF.Functions
+                        .ToTsVector("english", p.Name + " " + p.Category + " " + p.Description + " " + p.Slug)
+                        .Matches(EF.Functions.PhraseToTsQuery("english", searchTerm)))
+                    .AsNoTracking();
+            }
+
+            var totalCount = await query.CountAsync(cancellationToken);
+
+            var products = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(cancellationToken);
+
+            var pagedResult = new PagedResult<GroceryProduct>(products, totalCount, page, pageSize);
+
+            return Results.Ok(pagedResult);
         }
 
         private static async Task<IResult> GetProductById(GroceryDbContext db, int id, CancellationToken cancellationToken)
@@ -145,16 +211,16 @@ namespace GroceryProducts.Api.Endpoints
             existingProduct.Description = product.Description;
             existingProduct.Price = product.Price;
             existingProduct.Slug = product.Slug;
-            // ... Update other properties as needed
 
             try
             {
                 await db.SaveChangesAsync(cancellationToken);
-                return Results.Ok(existingProduct); // Return the updated product
+                return Results.Ok(existingProduct);
             }
-            catch (DbUpdateConcurrencyException) // Handle concurrency issues
+            catch (DbUpdateConcurrencyException)
             {
-                return Results.Conflict(); // Or another appropriate status code
+                // Logging
+                return Results.Conflict();
             }
         }
 
