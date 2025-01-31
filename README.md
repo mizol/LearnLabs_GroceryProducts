@@ -16,7 +16,6 @@ A series of labs presented in this document demonstrate PostgreSQL functionaliti
 By completing these labs, you will:
 - **Gain hands-on experience** with PostgreSQL, learning how to effectively fetch and index data using its powerful features.
 - **Sharpen your SQL skills** through practical application and real-world scenarios.
-- **Develop a strong understanding** of API versioning and best practices for robust error handling.
 
 
 ## 1 SQL Function paged search with total count
@@ -110,6 +109,8 @@ LIMIT 10 OFFSET 0
 	- Learn to use various join types in SQL queries to retrieve data more efficiently from multiple tables. 
 - API Versioning
 	- Approaches for handling data version control inside the database system. 
+- API Idempotency
+    - Explore the concept of idempotency in REST APIs. 
 - Error Handling
 	- Develop reliable error handling systems within both SQL queries and the application logic. 
 - Distributed Cache (Redis)
