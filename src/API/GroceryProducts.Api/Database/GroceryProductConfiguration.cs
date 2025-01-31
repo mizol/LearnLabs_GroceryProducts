@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GroceryProducts.Api.Database;
 
-internal class GroceryProductConfiguration : IEntityTypeConfiguration<GroceryProduct>
+internal sealed class GroceryProductConfiguration : IEntityTypeConfiguration<GroceryProduct>
 {
     public void Configure(EntityTypeBuilder<GroceryProduct> builder)
     {

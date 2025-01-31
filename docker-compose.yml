@@ -8,7 +8,7 @@ services:
     container_name: GroceryProduct.Api
     build:
       context: .
-      dockerfile: GroceryProducts.Api/Dockerfile
+      dockerfile: src/API/GroceryProducts.Api/Dockerfile
     ports:
       - 5256:5256
       - 7274:7274 

@@ -60,7 +60,7 @@ internal static class GroceryProductEndpoints
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status500InternalServerError);
     }
-    
+
     private static async Task<IResult> GetProducts(
         GroceryDbContext db, 
         string? searchTerm = null,
@@ -72,13 +72,13 @@ internal static class GroceryProductEndpoints
 
         if (!string.IsNullOrEmpty(searchTerm))
         {
-            CultureInfo cultureInfo = System.Globalization.CultureInfo.CurrentCulture;
-            searchTerm = searchTerm.ToLower(System.Globalization.CultureInfo.CurrentCulture);
+            searchTerm = searchTerm.ToLower();
 
-            query = query.Where(p => EF.Functions.Like(p.Name.ToLower(cultureInfo), $"%{searchTerm}%") ||
-                         EF.Functions.Like(p.Category.ToLower(cultureInfo), $"%{searchTerm}%") ||
-                         p.Description != null && EF.Functions.Like(p.Description.ToLower(cultureInfo), $"%{searchTerm}%") ||
-                         EF.Functions.Like(p.Slug.ToLower(cultureInfo), $"%{searchTerm}%"));
+            query = query.Where(p => EF.Functions.Like(p.Name.ToLower(), $"%{searchTerm}%") ||
+                         EF.Functions.Like(p.Category.ToLower(), $"%{searchTerm}%") ||
+                         p.Description != null && EF.Functions.Like(p.Description.ToLower(), $"%{searchTerm}%") ||
+                         EF.Functions.Like(p.Slug.ToLower(), $"%{searchTerm}%"));
+
         }
 
         var totalCount = await query.CountAsync(cancellationToken);

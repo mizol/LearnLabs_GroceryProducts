@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GroceryProducts.Api.Database;
 
-internal class GroceryDbContext : DbContext
+internal sealed class GroceryDbContext : DbContext
 {
     public GroceryDbContext(DbContextOptions<GroceryDbContext> options) : base(options) { }
 

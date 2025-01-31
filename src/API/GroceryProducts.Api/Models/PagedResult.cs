@@ -1,6 +1,6 @@
 ﻿namespace GroceryProducts.Api.Models;
 
-internal class PagedResult<T>
+internal sealed class PagedResult<T>
 {
     public List<T> Items { get; set; }
     public int TotalCount { get; set; }

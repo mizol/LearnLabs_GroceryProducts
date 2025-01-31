@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 namespace GroceryProducts.Api.Entities;
 
-internal class GroceryProduct
+internal sealed class GroceryProduct
 {
     [Key]
     public int Id { get; set; }
@@ -43,7 +43,7 @@ internal class GroceryProduct
             return ""; // Or handle as you see fit
         }
 
-        string slug = productName.ToLower(System.Globalization.CultureInfo.CurrentCulture);
+        string slug = productName.ToLowerInvariant();
         slug = System.Text.RegularExpressions.Regex.Replace(slug, @"[^a-z0-9\s-]", ""); // Remove invalid chars
         slug = System.Text.RegularExpressions.Regex.Replace(slug, @"\s+", "-").Trim(); // Replace spaces with hyphens
         slug = System.Text.RegularExpressions.Regex.Replace(slug, @"-+", "-"); // Remove duplicate hyphens

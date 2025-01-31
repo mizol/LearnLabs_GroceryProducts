@@ -3,7 +3,7 @@ using NpgsqlTypes;
 
 namespace GroceryProducts.Api.Entities;
 
-internal class GroceryProductVector
+internal sealed class GroceryProductVector
 {
     [Key]
     public int Id { get; set; }

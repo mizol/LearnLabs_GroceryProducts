@@ -2,7 +2,7 @@
 
 namespace GroceryProducts.Api.Models;
 
-internal record GroceryProductDto
+internal sealed record GroceryProductDto
 {
     public string Name { get; set; } = string.Empty;
     public int Id { get; set; }
