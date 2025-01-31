@@ -72,7 +72,7 @@ END;
 $$;
 ```
 
-!["Search by SQL Function logs"](Solution Items/img/SQLFunction.png)
+!["Search by SQL Function logs"](doc/img/SQLFunction.png)
 
 ## 2 Full-text search with vector column
 
@@ -83,10 +83,10 @@ WHERE to_tsvector('english', p.name || ' ' || p.category || ' ' || p.description
 @@ phraseto_tsquery('english', 'pantry')
 LIMIT 10 OFFSET 0
 ```
-!["Full-tetxt search logs"](Solution Items/img/FullTextSearch.png)
+!["Full-tetxt search logs"](doc/img/FullTextSearch.png)
 
 
-## 3 SQL search with LIKE and with ILIKE
+## 3 SQL search with LIKE and with LIKE
 
 ```sql
 SELECT p.id, p.brand, p.category, p.description, p.image_url, p.name, p.price, p.quantity_in_stock, p.slug, p.unit
@@ -95,7 +95,7 @@ WHERE lower(p.name) LIKE '%pantry%' ESCAPE '' OR lower(p.category) LIKE '%pantry
 LIMIT 10 OFFSET 0
 ```
 
-!["Search with LIKE logs"](Solution Items/img/SQLSelect.png)
+!["Search with LIKE logs"](doc/img/SQLSelect.png)
 
 
 ## Resources
