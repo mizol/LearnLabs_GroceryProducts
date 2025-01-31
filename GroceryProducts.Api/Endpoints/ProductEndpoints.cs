@@ -12,9 +12,9 @@ namespace GroceryProducts.Api.Endpoints
         {
             routes.MapGet("/api/products", GetProducts)
                 .WithName("GetProducts")
-                .WithOpenApi() // Enable Swagger documentation
-                .Produces<PagedResult<GroceryProduct>>(StatusCodes.Status200OK) // Specify success response type
-                .ProducesProblem(StatusCodes.Status500InternalServerError); // Specify error response
+                .WithOpenApi()
+                .Produces<PagedResult<GroceryProduct>>(StatusCodes.Status200OK)
+                .ProducesProblem(StatusCodes.Status500InternalServerError);
 
             routes.MapGet("/api/products/function-search", GetProductsByFunction)
                 .WithName("GetProductsByFunctionSearch")
@@ -38,7 +38,7 @@ namespace GroceryProducts.Api.Endpoints
             routes.MapPost("/api/products", CreateProduct)
                 .WithName("CreateProduct")
                 .WithOpenApi()
-                .Accepts<GroceryProduct>(MediaTypeNames.Application.Json) // Specify request body type for Swagger
+                .Accepts<GroceryProduct>(MediaTypeNames.Application.Json)
                 .Produces<GroceryProduct>(StatusCodes.Status201Created)
                 .ProducesProblem(StatusCodes.Status400BadRequest)
                 .ProducesProblem(StatusCodes.Status500InternalServerError);
@@ -119,31 +119,6 @@ namespace GroceryProducts.Api.Endpoints
             return Results.Ok(pagedResult);
         }
 
-
-        private static async Task<IResult> GetProductsByFunction1(
-            GroceryDbContext db,
-            string? searchTerm = null,
-            int page = 1,
-            int pageSize = 10,
-            CancellationToken cancellationToken = default)
-        {
-            object searchParam;
-            if (string.IsNullOrEmpty(searchTerm))
-            {
-                searchParam = DBNull.Value;
-            }
-            else
-            {
-                searchParam = searchTerm;
-            }
-
-            var products = await db.Products
-                .FromSqlRaw("SELECT * FROM GetPagedSearchResults({0}, {1}, {2})", searchParam, page, pageSize)
-                .ToListAsync(cancellationToken);
-
-            return Results.Ok(products);
-        }
-
         private static async Task<IResult> GetProductsFullTextSearch(
             GroceryDbContext db,
             string searchTerm,
@@ -176,19 +151,19 @@ namespace GroceryProducts.Api.Endpoints
 
         private static async Task<IResult> GetProductById(GroceryDbContext db, int id, CancellationToken cancellationToken)
         {
-            var product = await db.Products.FindAsync(new object[] { id }, cancellationToken); // Use FindAsync with object[] for composite keys if needed
+            var product = await db.Products.FindAsync(new object[] { id }, cancellationToken);
             return product == null ? Results.NotFound() : Results.Ok(product);
         }
 
         private static async Task<IResult> CreateProduct(GroceryDbContext db, GroceryProduct product, CancellationToken cancellationToken)
         {
-            if (!db.Products.Any(p => p.Slug == product.Slug)) // Check slug uniqueness
+            if (!db.Products.Any(p => p.Slug == product.Slug)) 
             {
                 db.Products.Add(product);
                 await db.SaveChangesAsync(cancellationToken);
-                return Results.Created($"/api/products/{product.Id}", product); // Return 201 Created with location header
+                return Results.Created($"/api/products/{product.Id}", product); 
             }
-            return Results.BadRequest(new { message = "Slug already exists" }); // Return 400 Bad Request for duplicate slug
+            return Results.BadRequest(new { message = "Slug already exists" }); 
         }
 
 
@@ -205,7 +180,6 @@ namespace GroceryProducts.Api.Endpoints
                 return Results.NotFound();
             }
 
-            // Update only the properties that should be modified. This prevents overposting.
             existingProduct.Name = product.Name;
             existingProduct.Category = product.Category;
             existingProduct.Description = product.Description;
@@ -219,7 +193,7 @@ namespace GroceryProducts.Api.Endpoints
             }
             catch (DbUpdateConcurrencyException)
             {
-                // Logging
+                // Logging...
                 return Results.Conflict();
             }
         }
@@ -234,7 +208,7 @@ namespace GroceryProducts.Api.Endpoints
 
             db.Products.Remove(product);
             await db.SaveChangesAsync(cancellationToken);
-            return Results.NoContent(); // 204 No Content
+            return Results.NoContent();
         }
     }
 }

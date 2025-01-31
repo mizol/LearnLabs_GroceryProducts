@@ -14,10 +14,10 @@ namespace GroceryProducts.Api.Entities
 
         [Required(ErrorMessage = "Category is required.")]
         [StringLength(100, ErrorMessage = "Category cannot exceed 100 characters.")]
-        public string Category { get; set; }
+        public string Category { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Description is required.")]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Range(0, double.MaxValue, ErrorMessage = "Price must be a non-negative value.")]
         public decimal Price { get; set; }
@@ -32,37 +32,12 @@ namespace GroceryProducts.Api.Entities
         public string? Brand { get; set; } 
 
         [StringLength(50, ErrorMessage = "Unit cannot exceed 50 characters.")]
-        public string? Unit { get; set; } // e.g., "kg", "liter", "piece" - Make nullable
+        public string? Unit { get; set; }
 
         [Required]
         [StringLength(255)]
-        public string Slug { get; set; } // The slug field
+        public string Slug { get; set; } = string.Empty;
 
         public NpgsqlTsVector SearchVector { get; set; }
-
-        // public DateTime CreatedAt { get; set; }
-        // public DateTime UpdatedAt { get; set; }
-        // public bool IsFeatured { get; set; }
-        // public bool IsActive { get; set; }
-
-        // Example of a related entity (if needed)
-        // public int SupplierId { get; set; }
-        // public Supplier Supplier { get; set; }
-
-        // It allows to generate a slug
-        public static string GenerateSlug(string productName)
-        {
-            if (string.IsNullOrWhiteSpace(productName))
-            {
-                return ""; // Or handle as you see fit
-            }
-
-            string slug = productName.ToLower();
-            slug = System.Text.RegularExpressions.Regex.Replace(slug, @"[^a-z0-9\s-]", ""); // Remove invalid chars
-            slug = System.Text.RegularExpressions.Regex.Replace(slug, @"\s+", "-").Trim(); // Replace spaces with hyphens
-            slug = System.Text.RegularExpressions.Regex.Replace(slug, @"-+", "-"); // Remove duplicate hyphens
-
-            return slug;
-        }
     }
 }

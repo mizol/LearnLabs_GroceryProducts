@@ -37,16 +37,6 @@ namespace GroceryProducts.Api.Entities
         [StringLength(255)]
         public string Slug { get; set; } // The slug field
 
-        // public DateTime CreatedAt { get; set; }
-        // public DateTime UpdatedAt { get; set; }
-        // public bool IsFeatured { get; set; }
-        // public bool IsActive { get; set; }
-
-        // Example of a related entity (if needed)
-        // public int SupplierId { get; set; }
-        // public Supplier Supplier { get; set; }
-
-        // It allows to generate a slug
         public static string GenerateSlug(string productName)
         {
             if (string.IsNullOrWhiteSpace(productName))

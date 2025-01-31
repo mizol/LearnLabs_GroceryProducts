@@ -5,8 +5,6 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -18,18 +16,20 @@ builder.Services.AddDbContext<GroceryDbContext>(options =>
                 .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.GroceryProducts))
         .UseSnakeCaseNamingConvention());
 
-
 var app = builder.Build();
 
-// In Program.cs (ASP.NET Core example)
-using (var scope = app.Services.CreateScope())
+if (app.Environment.IsDevelopment())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<GroceryDbContext>();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 
-    if (dbContext.Database.GetPendingMigrations().Any())
+    var dbContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<GroceryDbContext>();
+
+    var pendingResult = await dbContext.Database.GetPendingMigrationsAsync();
+    if (pendingResult.Any())
     {
         Console.WriteLine("Pending migrations found. Applying...");
-        dbContext.Database.Migrate(); // Apply pending migrations
+        await dbContext.Database.MigrateAsync(); 
         Console.WriteLine("Migrations applied.");
     }
     else
@@ -38,17 +38,8 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
 app.UseHttpsRedirection();
 
 app.MapGroceryProductEndpoints();
 
 await app.RunAsync();
-
-
