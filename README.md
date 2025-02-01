@@ -85,7 +85,7 @@ LIMIT 10 OFFSET 0
 !["Full-tetxt search logs"](doc/img/FullTextSearch.png)
 
 
-## 3 SQL search with LIKE and with LIKE
+## 3 SQL search with LIKE
 
 ```sql
 SELECT p.id, p.brand, p.category, p.description, p.image_url, p.name, p.price, p.quantity_in_stock, p.slug, p.unit
@@ -100,7 +100,7 @@ LIMIT 10 OFFSET 0
 ## Resources
 
 - [Full Text Search in .NET With PostgreSQL and EF Core](https://youtu.be/NPduWiPzhpE?si=mH5JHr2O2ASulMuT)
-- [Postgres Docs - Chapter 12. Full Text Search](https://www.postgresql.org/docs/current/textsearch.html)
+- [Postgres Docs - ChapterÂ 12.Â Full Text Search](https://www.postgresql.org/docs/current/textsearch.html)
 - [sandeep-sachan Why-EF-pagination](https://sandeep-sachan.medium.com/why-entity-framework-pagination-to-stored-procedures-e5b04d63019)
 
 - 
