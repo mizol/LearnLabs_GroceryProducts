@@ -96,6 +96,45 @@ LIMIT 10 OFFSET 0
 
 !["Search with LIKE logs"](doc/img/SQLSelect.png)
 
+## Project structure
+
+```
+📦 GroceryProducts
+├── 📂 Solution Items
+│   ├── 📄 .editorconfig
+│   ├── 📄 .env.example
+│   ├── 📄 .gitignore
+│   ├── 📄 Directory.Build.props
+│   └── 📄 README.md
+├── 📂 src
+│   └── 📂 API
+│        └── 📂 GroceryProducts.Api
+│              ├── 📂 Database
+│              │    ├── 📂 Seeds
+│              │    │     └── 📄 grocery_products_seeds.json
+│              │    ├── 📄 GroceryDbContext.cs
+│              │    ├── 📄 GroceryProductConfiguration.cs
+│              │    ├── 📄 GroceryProductVectorConfiguration.cs
+│              │    ├── 📄 Schemas.cs
+│              │    ├── 📄 SeedDataLoader.cs
+│              ├── 📂 Endpoints
+│              │    └── 📄 ProductEndpoints.cs
+│              ├── 📂 Entities
+│              │    ├── 📄 GroceryProduct.cs
+│              │    └── 📄 GroceryProductVector.cs
+│              ├── 📂 Migrations
+│              ├── 📂 Models
+│              │    ├── 📄 PagedResult.cs
+│              │    └── 📄 ProductsDto.cs
+│              ├── 📄 appsettings.json
+│              ├── 📄 Dockerfile
+│              └── 📄 Program.cs
+├── 📂 docker-compose
+│   ├── 📄 .dockerignore
+│   ├── 📄 docker-compose.yml
+│   └── 📄 launchSettings.json
+
+```
 
 ## Resources
 
